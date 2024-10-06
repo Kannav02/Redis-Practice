@@ -1,0 +1,74 @@
+redis is an in memory data store, used for caching is really fast
+
+run it on the machine using docker
+
+
+the docker instance that i am using is redis-stack, which contains a gui to display the changes made to the redis data store
+
+
+command for the same was
+
+docker run -d --name redis-stack -p 6739:6739 -p 8001:8001 redis/redis-stack:latest
+
+
+
+6739 is the default port to run redis
+8001 is the default port to run redis-stack
+
+
+redis supports many datatypes
+[string]
+
+SET <entity>:<id> value , sets the value for the entity and the id
+
+GET <entity>:<id> gets the value for the entity and the id
+
+why this convention is followed is because, entity refers to the table you are using and the id refers to the unq id you are assigning to the user
+
+SET <entity>:<id> value nx, this is used to set the value of the key if it doesn't exists
+MGET <entity>:<id> <entity>:<id>, used to get multiple values at once for the same
+MSET - same thing as mget but used for setting multiple values
+INCR <entity>:1 , used to increase the counter by one
+
+
+
+
+another type of redis data structure is lists, which is an array, can be used as stacks and queues
+
+
+
+
+LPUSH <key/name of data strucutre> <value> - pushes the value from the left side of the list , so head operation
+RPUSH <key/name of data structure> <value> - pushes from the right side of the list, so tail operation
+
+
+to implement stacks push  from the left side and pop from the left side as well, so LIFO
+to implement queues push from the left side and pop from the right side, so FIFO
+
+LPOP <key/name of the data structure> - pops the element from the left side or the head
+RPOP <key/name of the data structure> - same thing, just pops the element from the right side of the list
+
+LLEN  <key> - gives the length of the list used
+
+blocking commands in list
+
+BLPOP <key> - removes and returns an elements from the head of the list, but here the twist is it either pops the elements if it exists, or blocks the commands for the timeout given to it
+
+to read a list we can use the command called as Lrange start end
+
+to read the entire list enter teh start range as 0 and the end range as -1
+
+to delete a key use the command DEL keyname
+
+to list out all the keys following a pattern use KEYS pattern like KEYS user:*
+
+
+
+Sets
+
+doesn't allow duplicate values, used to track unq items
+
+SADD <key> <value> - used to add a value to the given key over here,
+SREM <key> <value> - used to remove the given value from the key
+SISEMEMBER <key> <value> - used to check if a given value is the member of the key over here
+
